@@ -1,0 +1,139 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="clinic_doctor_list">
+      <field name="name">clinic doctor</field>
+      <field name="model">clinic.doctor</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="clinic_doctor_form">
+      <field name="name">clinic doctor</field>
+      <field name="model">clinic.doctor</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="name"/>
+          </group>
+          <group>
+            <field name="schedule">
+              <tree editable="bottom">
+                <field name="day"/>
+                <field name="start_date" widget="float_time" />
+                <field name="end_date" widget="float_time" />
+              </tree>
+            </field>
+          </group>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="clinic_doctor_schedule_list">
+      <field name="name">clinic doctor schedule list</field>
+      <field name="model">clinic_doctor.schedule</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="day"/>
+            <field name="start_date" widget="float_time" />
+            <field name="end_date" widget="float_time" />
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="clinic_doctor_schedule_form">
+      <field name="name">clinic doctor schedule form</field>
+      <field name="model">clinic_doctor.schedule</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="day"/>
+            <field name="start_date" widget="float_time" />
+            <field name="end_date" widget="float_time" />
+          </group>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="reservation_form">
+      <field name="name">reservation form</field>
+      <field name="model">reservation.date</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="confirm" string="book" type="object" class="oe_highlight"/>
+          </header>
+          <group>
+            <field name="name"/>
+            <field name="doctor_name" />
+          </group>
+          <group>
+            <field name="reservation_time"  widget="float_time"/>
+            <field name="reservation_date" />
+            <field name="reservation_status" />
+          </group>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="reservation_list">
+      <field name="name">reservation list</field>
+      <field name="model">reservation.date</field>
+      <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="doctor_name" />
+            <field name="reservation_time"  widget="float_time"/>
+            <field name="reservation_date"/>
+            <field name="reservation_status"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="doctor_action_window">
+      <field name="name">doctor window</field>
+      <field name="res_model">clinic.doctor</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="schedule_action_window">
+      <field name="name">schedule window</field>
+      <field name="res_model">clinic_doctor.schedule</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="reservation_action_window">
+      <field name="name">reservation window</field>
+      <field name="res_model">reservation.date</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="clinic.action_server">
+      <field name="name">clinic server</field>
+      <field name="model_id" ref="model_clinic_clinic"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+
+    <menuitem name="clinic" id="clinic.menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="doctors" id="clinic_menu_1" parent="clinic.menu_root" action="doctor_action_window"/>
+    <menuitem name="schedules" id="clinic_menu_2" parent="clinic.menu_root" action="schedule_action_window"/>
+    <menuitem name="reservations" id="clinic_menu_3" parent="clinic.menu_root" action="reservation_action_window"/>
+
+<!--    <menuitem name="List" id="clinic.menu_1_list" parent="clinic.menu_1"-->
+<!--              action="clinic.action_window"/>-->
+<!--    <menuitem name="Server to list" id="clinic" parent="clinic.menu_2"-->
+<!--              action="clinic.action_server"/>-->
+  </data>
+</odoo>
