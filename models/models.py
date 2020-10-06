@@ -25,7 +25,6 @@ class clinic_line(models.Model):
     ], string='day')
     start_date = fields.Float(string="start time")
     end_date = fields.Float(string="end time")
-    reservation_status = fields.Boolean(string="reservation status")
 
 
 class reservations(models.Model):
